@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@fuckyoustan | Android Performance Developer</title>
+    <meta name="description" content="Portfolio of @fuckyoustan. Developing shell scripts to optimize and improve Android performance.">
+    <meta name="keywords" content="Android, Magisk, Shell Script, Performance, Optimization, Licking Thermal, PingPimp, DeepSleep">
+    <meta name="author" content="@fuckyoustan">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --md-sys-color-background: #FDFDF6;
+            --md-sys-color-on-background: #1A1C18;
+            --md-sys-color-surface: #F2F4EB;
+            --md-sys-color-primary: #386A20;
+            --md-sys-color-secondary: #55624C;
+            --md-sys-color-surface-variant: #E1E4D5;
+            --md-sys-color-on-surface-variant: #43483E;
+            --radius-large: 28px;
+            --radius-medium: 16px;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-background: #1A1C18;
+                --md-sys-color-on-background: #E3E3DC;
+                --md-sys-color-surface: #121410;
+                --md-sys-color-primary: #9CD67D;
+                --md-sys-color-secondary: #BFCBAD;
+                --md-sys-color-surface-variant: #43483E;
+                --md-sys-color-on-surface-variant: #C3C8BB;
+            }
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        main {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--md-sys-color-surface-variant);
+            margin-bottom: 1.2rem;
+            border: 4px solid var(--md-sys-color-surface);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transition: border-color 0.3s ease;
+        }
+
+        .name {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .bio {
+            font-size: 1.15rem;
+            color: var(--md-sys-color-secondary);
+            max-width: 550px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: var(--md-sys-color-on-background);
+            padding-left: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--radius-large);
+            padding: 1.8rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--md-sys-color-surface-variant);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .project-icon {
+            font-size: 1.8rem;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 1.2rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--md-sys-color-on-background);
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--md-sys-color-on-surface-variant);
+            flex-grow: 1;
+            font-weight: 300;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--md-sys-color-surface-variant);
+            width: 100%;
+            max-width: 900px;
+            transition: border-color 0.3s ease;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+        }
+
+        .social-links a {
+            color: var(--md-sys-color-secondary);
+            font-size: 1.6rem;
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--md-sys-color-primary);
+            transform: scale(1.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="profile-section">
+            <img src="a.jpg" alt="Profile Picture" class="profile-pic" onerror="this.src='https://via.placeholder.com/130?text=Stan'">
+            <h1 class="name">@fuckyoustan</h1>
+            <p class="bio">Developing shell scripts to optimize & improve Android performance.</p>
+        </section>
+
+        <h2 class="section-title">Featured Projects</h2>
+        <section class="projects-grid">
+            
+            <a href="https://github.com/fuckyoustan/PingPimp" target="_blank" class="project-card">
+                <i class="fa-solid fa-network-wired project-icon"></i>
+                <h3 class="project-title">PingPimp</h3>
+                <p class="project-desc">A network optimization module designed to reduce latency and maximize connection performance.</p>
+            </a>
+            
+            <a href="https://github.com/fuckyoustan/Licking-Thermal" target="_blank" class="project-card">
+                <i class="fa-solid fa-temperature-arrow-down project-icon"></i>
+                <h3 class="project-title">Licking Thermal</h3>
+                <p class="project-desc">Advanced thermal throttling management to keep your Android device running cool and stable.</p>
+            </a>
+
+            <a href="https://github.com/fuckyoustan/Ultimate-Thermal-Destroyer" target="_blank" class="project-card">
+                <i class="fa-solid fa-fire project-icon"></i>
+                <h3 class="project-title">Thermal Destroyer</h3>
+                <p class="project-desc">Aggressive thermal limit modification for users who demand absolute peak performance.</p>
+            </a>
+            
+            <a href="https://github.com/fuckyoustan/Ultimate-Rendering-Optimization" target="_blank" class="project-card">
+                <i class="fa-solid fa-microchip project-icon"></i>
+                <h3 class="project-title">Ultimate Render</h3>
+                <p class="project-desc">Graphic rendering tweaks crafted to enhance UI fluidity and boost frame rates on Android.</p>
+            </a>
+
+            <a href="https://github.com/fuckyoustan/Acceleration-N-Utility" target="_blank" class="project-card">
+                <i class="fa-solid fa-gauge-high project-icon"></i>
+                <h3 class="project-title">Acceleration N Utility (ANU)</h3>
+                <p class="project-desc">A comprehensive utility toolkit aimed at accelerating system responsiveness and daily tasks.</p>
+            </a>
+
+            <a href="https://github.com/fuckyoustan/Force-DeepSleep" target="_blank" class="project-card">
+                <i class="fa-solid fa-moon project-icon"></i>
+                <h3 class="project-title">DeepSleep</h3>
+                <p class="project-desc">Battery optimization scripts engineered to maximize doze mode and deep sleep efficiency.</p>
+            </a>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/napiies_" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="t.me/fuckyoustan" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://open.spotify.com/playlist/2Jncc9wgpwk68lfYLn4BeU?si=3AzAERDgRS6QijsT66JdKA" target="_blank" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
+            <a href="https://github.com/fuckyoustan" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
