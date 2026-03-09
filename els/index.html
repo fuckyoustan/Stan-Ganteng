@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <title>@fuckyoustan | Android Performance Developer</title>
+    <meta name="color-scheme" content="light">
+    
+    <title>@fuckyoustan</title>
     <meta name="description" content="Portfolio of @fuckyoustan. Developing shell scripts to optimize and improve Android performance.">
     <meta name="keywords" content="Android, Magisk, Shell Script, Performance, Optimization, Licking Thermal, PingPimp, DeepSleep">
     <meta name="author" content="@fuckyoustan">
+    
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -20,20 +22,21 @@
             --md-sys-color-secondary: #55624C;
             --md-sys-color-surface-variant: #E1E4D5;
             --md-sys-color-on-surface-variant: #43483E;
+            --header-border: rgba(0, 0, 0, 0.06);
             --radius-large: 28px;
             --radius-medium: 16px;
+            --radius-pill: 50px;
         }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --md-sys-color-background: #1A1C18;
-                --md-sys-color-on-background: #E3E3DC;
-                --md-sys-color-surface: #121410;
-                --md-sys-color-primary: #9CD67D;
-                --md-sys-color-secondary: #BFCBAD;
-                --md-sys-color-surface-variant: #43483E;
-                --md-sys-color-on-surface-variant: #C3C8BB;
-            }
+
+        body.dark-theme {
+            --md-sys-color-background: #1A1C18;
+            --md-sys-color-on-background: #E3E3DC;
+            --md-sys-color-surface: #121410;
+            --md-sys-color-primary: #9CD67D;
+            --md-sys-color-secondary: #BFCBAD;
+            --md-sys-color-surface-variant: #43483E;
+            --md-sys-color-on-surface-variant: #C3C8BB;
+            --header-border: rgba(255, 255, 255, 0.06);
         }
 
         * {
@@ -44,6 +47,11 @@
             font-family: 'Outfit', sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* Jarak aman agar header tidak menutupi judul saat di-scroll */
+        }
+
         body {
             background-color: var(--md-sys-color-background);
             color: var(--md-sys-color-on-background);
@@ -51,19 +59,112 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 3rem 1.5rem;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            padding-top: 90px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(var(--md-sys-color-background-rgb), 0.7); /* Transparan dinamis */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--header-border);
+            z-index: 1000;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body { --md-sys-color-background-rgb: 253, 253, 246; }
+        body.dark-theme { --md-sys-color-background-rgb: 26, 28, 24; }
+
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--md-sys-color-on-background);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .header-brand i {
+            color: var(--md-sys-color-primary);
+            font-size: 1.1rem;
+        }
+
+        .header-brand:hover {
+            color: var(--md-sys-color-primary);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: var(--md-sys-color-secondary);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--md-sys-color-primary);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--md-sys-color-on-background);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-surface-variant);
+        }
+
+        @media (max-width: 650px) {
+            .header-nav { gap: 1.2rem; }
+            .header-nav a { font-size: 0.85rem; }
+            .header-brand span { display: none; }
         }
 
         main {
             width: 100%;
             max-width: 900px;
+            padding: 2rem 1.5rem 0;
         }
 
         .profile-section {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 4.5rem;
             animation: fadeIn 0.8s ease-out;
         }
 
@@ -104,26 +205,18 @@
             letter-spacing: 0.5px;
         }
 
-        /* About Section Styles */
         .info-section {
-            margin-bottom: 4rem;
+            margin-bottom: 4.5rem;
             animation: fadeIn 1s ease-out;
         }
 
-        .info-card {
-            background-color: var(--md-sys-color-surface);
-            border-radius: var(--radius-large);
-            padding: 2.5rem;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .info-card:hover {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+        .about-content {
+            padding: 0 0.5rem;
         }
 
         .about-text {
-            font-size: 1.1rem;
-            color: var(--md-sys-color-on-surface-variant);
+            font-size: 1.15rem;
+            color: var(--md-sys-color-on-background);
             margin-bottom: 1.5rem;
             line-height: 1.8;
             font-weight: 300;
@@ -133,11 +226,15 @@
             margin-bottom: 0;
         }
 
+        .projects-wrapper {
+            margin-bottom: 4rem;
+        }
+
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem 1.5rem;
-            margin-bottom: 4rem;
+            margin-bottom: 2.5rem;
         }
 
         .project-card {
@@ -146,7 +243,12 @@
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, opacity 0.4s ease;
+        }
+
+        .hidden-project {
+            display: none;
+            opacity: 0;
         }
 
         .banner-container {
@@ -200,32 +302,85 @@
             line-height: 1.6;
         }
 
+        .toggle-btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pill-btn {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-background);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 12px 28px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            background-color: var(--md-sys-color-primary);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .pill-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .pill-btn.expanded i {
+            transform: rotate(180deg);
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0 0.5rem;
+        }
+
+        .contact-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-background);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-pill);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .contact-pill i {
+            font-size: 1.2rem;
+            color: var(--md-sys-color-primary);
+            transition: color 0.2s ease;
+        }
+
+        .contact-pill:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
         footer {
             margin-top: auto;
             text-align: center;
-            padding-top: 2.5rem;
-            border-top: 1px solid var(--md-sys-color-surface-variant);
+            padding: 2.5rem 1.5rem;
             width: 100%;
-            max-width: 900px;
-            transition: border-color 0.3s ease;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.8rem;
-        }
-
-        .social-links a {
             color: var(--md-sys-color-secondary);
-            font-size: 1.6rem;
-            text-decoration: none;
-            transition: color 0.2s ease, transform 0.2s ease;
+            font-weight: 400;
+            font-size: 0.95rem;
         }
 
-        .social-links a:hover {
-            color: var(--md-sys-color-primary);
-            transform: scale(1.15);
+        footer .heart {
+            color: #e25555;
         }
 
         @keyframes fadeIn {
@@ -236,6 +391,25 @@
 </head>
 <body>
 
+    <header>
+        <div class="header-container">
+            <a href="#" class="header-brand">
+                <i class="fa-solid fa-terminal"></i>
+                <span>stan.</span>
+            </a>
+            
+            <nav class="header-nav">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <button class="theme-toggle-btn" id="themeBtn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
     <main>
         <section class="profile-section">
             <img src="a.jpg" alt="Profile Picture" class="profile-pic" onerror="this.src='https://via.placeholder.com/130?text=Stan'">
@@ -243,9 +417,9 @@
             <p class="bio">Developing shell scripts to optimize & improve Android performance.</p>
         </section>
 
-        <section class="info-section">
+        <section class="info-section" id="about">
             <h2 class="section-title">About Me</h2>
-            <div class="info-card">
+            <div class="about-content">
                 <p class="about-text">
                     I am a passionate developer with a strong focus on optimizing and enhancing system performance. Through continuous exploration and hands-on experience, I have developed a deep understanding of shell scripting and system-level modifications, allowing me to create robust tools that push the boundaries of device efficiency.
                 </p>
@@ -255,80 +429,147 @@
             </div>
         </section>
 
-        <h2 class="section-title">Featured Projects</h2>
-        <section class="projects-grid">
+        <div class="projects-wrapper" id="projects">
+            <h2 class="section-title">My Projects</h2>
+            <section class="projects-grid">
+                
+                <a href="https://github.com/fuckyoustan/PingPimp" target="_blank" class="project-card visible-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/PingPimp.jpg" alt="PingPimp Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/PingPimp'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">PingPimp</h3>
+                        <p class="project-desc">A network optimization module designed to reduce latency and maximize connection performance.</p>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/fuckyoustan/Licking-Thermal" target="_blank" class="project-card visible-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Licking.jpg" alt="Licking Thermal Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Licking-Thermal'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Licking Thermal</h3>
+                        <p class="project-desc">Advanced thermal throttling management to keep your Android device running cool and stable.</p>
+                    </div>
+                </a>
+
+                <a href="https://github.com/fuckyoustan/Ultimate-Thermal-Destroyer" target="_blank" class="project-card visible-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Destroy.jpg" alt="Thermal Destroyer Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Thermal-Destroyer'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Thermal Destroyer</h3>
+                        <p class="project-desc">Aggressive thermal limit modification for users who demand absolute peak performance.</p>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/fuckyoustan/Ultimate-Rendering-Optimization" target="_blank" class="project-card hidden-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Render.jpg" alt="Ultimate Render Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Rendering-Optimization'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Ultimate Render</h3>
+                        <p class="project-desc">Graphic rendering tweaks crafted to enhance UI fluidity and boost frame rates on Android.</p>
+                    </div>
+                </a>
+
+                <a href="https://github.com/fuckyoustan/Acceleration-N-Utility" target="_blank" class="project-card hidden-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/ANU.jpg" alt="ANU Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Acceleration-N-Utility'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Acceleration N Utility (ANU)</h3>
+                        <p class="project-desc">A comprehensive utility toolkit aimed at accelerating system responsiveness and daily tasks.</p>
+                    </div>
+                </a>
+
+                <a href="https://github.com/fuckyoustan/Force-DeepSleep" target="_blank" class="project-card hidden-project">
+                    <div class="banner-container">
+                        <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Dipslip.jpg" alt="DeepSleep Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Force-DeepSleep'">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Deep Sleep</h3>
+                        <p class="project-desc">Battery optimization scripts engineered to maximize doze mode and deep sleep efficiency.</p>
+                    </div>
+                </a>
+
+            </section>
             
-            <a href="https://github.com/fuckyoustan/PingPimp" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/PingPimp.jpg" alt="PingPimp Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/PingPimp'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">PingPimp</h3>
-                    <p class="project-desc">A network optimization module designed to reduce latency and maximize connection performance.</p>
-                </div>
-            </a>
-            
-            <a href="https://github.com/fuckyoustan/Licking-Thermal" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Licking.jpg" alt="Licking Thermal Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Licking-Thermal'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Licking Thermal</h3>
-                    <p class="project-desc">Advanced thermal throttling management to keep your Android device running cool and stable.</p>
-                </div>
-            </a>
+            <div class="toggle-btn-container">
+                <button class="pill-btn" id="toggleProjectsBtn">
+                    <span id="btnText">See More</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
 
-            <a href="https://github.com/fuckyoustan/Ultimate-Thermal-Destroyer" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Destroy.jpg" alt="Thermal Destroyer Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Thermal-Destroyer'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Thermal Destroyer</h3>
-                    <p class="project-desc">Aggressive thermal limit modification for users who demand absolute peak performance.</p>
-                </div>
-            </a>
-            
-            <a href="https://github.com/fuckyoustan/Ultimate-Rendering-Optimization" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Render.jpg" alt="Ultimate Render Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Rendering-Optimization'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Ultimate Render</h3>
-                    <p class="project-desc">Graphic rendering tweaks crafted to enhance UI fluidity and boost frame rates on Android.</p>
-                </div>
-            </a>
-
-            <a href="https://github.com/fuckyoustan/Acceleration-N-Utility" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/ANU.jpg" alt="ANU Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Acceleration-N-Utility'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Acceleration N Utility (ANU)</h3>
-                    <p class="project-desc">A comprehensive utility toolkit aimed at accelerating system responsiveness and daily tasks.</p>
-                </div>
-            </a>
-
-            <a href="https://github.com/fuckyoustan/Force-DeepSleep" target="_blank" class="project-card">
-                <div class="banner-container">
-                    <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Dipslip.jpg" alt="DeepSleep Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Force-DeepSleep'">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">DeepSleep</h3>
-                    <p class="project-desc">Battery optimization scripts engineered to maximize doze mode and deep sleep efficiency.</p>
-                </div>
-            </a>
-
+        <section class="info-section" id="contact">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-grid">
+                <a href="https://www.instagram.com/napiies_" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+                <a href="https://t.me/fuckyoustan" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-telegram"></i> Telegram
+                </a>
+                <a href="https://open.spotify.com/playlist/2Jncc9wgpwk68lfYLn4BeU?si=3AzAERDgRS6QijsT66JdKA" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-spotify"></i> Spotify
+                </a>
+                <a href="https://github.com/fuckyoustan" target="_blank" class="contact-pill">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+            </div>
         </section>
     </main>
 
     <footer>
-        <div class="social-links">
-            <a href="https://www.instagram.com/napiies_" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="t.me/fuckyoustan" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
-            <a href="https://open.spotify.com/playlist/2Jncc9wgpwk68lfYLn4BeU?si=3AzAERDgRS6QijsT66JdKA" target="_blank" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
-            <a href="https://github.com/fuckyoustan" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        </div>
+        <p>Created with <span class="heart">❤️</span> by @fuckyoustan</p>
     </footer>
 
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        const toggleProjectsBtn = document.getElementById('toggleProjectsBtn');
+        const btnText = document.getElementById('btnText');
+        const hiddenProjects = document.querySelectorAll('.hidden-project');
+        let isExpanded = false;
+
+        toggleProjectsBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            
+            if (isExpanded) {
+                // Show projects
+                hiddenProjects.forEach(card => {
+                    card.style.display = 'flex';
+                    setTimeout(() => { card.style.opacity = '1'; }, 10);
+                });
+                btnText.textContent = 'See Less';
+                toggleProjectsBtn.classList.add('expanded');
+            } else {
+                // Hide projects
+                hiddenProjects.forEach(card => {
+                    card.style.opacity = '0';
+                    setTimeout(() => { card.style.display = 'none'; }, 300);
+                });
+                btnText.textContent = 'See More';
+                toggleProjectsBtn.classList.remove('expanded');
+                
+                // Scroll back to the "Featured Projects" title
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    </script>
 </body>
 </html>
