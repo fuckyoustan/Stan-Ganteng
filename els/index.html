@@ -7,7 +7,6 @@
     
     <title>@fuckyoustan</title>
     <meta name="description" content="Portfolio of @fuckyoustan. Developing shell scripts to optimize and improve Android performance.">
-    <meta name="keywords" content="Android, Magisk, Shell Script, Performance, Optimization, Licking Thermal, PingPimp, DeepSleep">
     <meta name="author" content="@fuckyoustan">
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -22,7 +21,6 @@
             --md-sys-color-secondary: #55624C;
             --md-sys-color-surface-variant: #E1E4D5;
             --md-sys-color-on-surface-variant: #43483E;
-            --header-border: rgba(0, 0, 0, 0.06);
             --radius-large: 28px;
             --radius-medium: 16px;
             --radius-pill: 50px;
@@ -36,7 +34,6 @@
             --md-sys-color-secondary: #BFCBAD;
             --md-sys-color-surface-variant: #43483E;
             --md-sys-color-on-surface-variant: #C3C8BB;
-            --header-border: rgba(255, 255, 255, 0.06);
         }
 
         * {
@@ -49,7 +46,7 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 100px; /* Jarak aman agar header tidak menutupi judul saat di-scroll */
+            scroll-padding-top: 100px; 
         }
 
         body {
@@ -69,12 +66,11 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(var(--md-sys-color-background-rgb), 0.7); /* Transparan dinamis */
+            background-color: rgba(var(--md-sys-color-background-rgb), 0.7); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--header-border);
             z-index: 1000;
-            transition: background-color 0.4s ease, border-color 0.4s ease;
+            transition: background-color 0.4s ease;
         }
 
         body { --md-sys-color-background-rgb: 253, 253, 246; }
@@ -110,50 +106,100 @@
             color: var(--md-sys-color-primary);
         }
 
-        .header-nav {
+        .menu-container {
+            position: relative;
+        }
+
+        .hamburger-btn {
             display: flex;
-            gap: 2.5rem;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
         }
 
-        .header-nav a {
+        .hamburger-btn .bar {
+            width: 26px;
+            height: 2px;
+            background-color: var(--md-sys-color-on-background);
+            border-radius: 2px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+
+        .hamburger-btn.open .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-btn.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.open .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--radius-medium);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-15px) scale(0.95);
+            transform-origin: top right;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--md-sys-color-surface-variant);
+        }
+
+        body.dark-theme .dropdown-menu {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .dropdown-item {
             text-decoration: none;
-            color: var(--md-sys-color-secondary);
-            font-size: 0.95rem;
+            color: var(--md-sys-color-on-background);
+            padding: 0.8rem 1.5rem;
+            font-size: 1.05rem;
             font-weight: 400;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-
-        .header-nav a:hover {
-            color: var(--md-sys-color-primary);
-            transform: translateY(-1px);
-        }
-
-        .theme-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: pointer;
             background: none;
             border: none;
-            color: var(--md-sys-color-on-background);
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 100%;
+            text-align: left;
         }
 
-        .theme-toggle-btn:hover {
-            transform: scale(1.1);
+        .dropdown-item i {
             color: var(--md-sys-color-primary);
-            background-color: var(--md-sys-color-surface-variant);
+            width: 20px;
+            text-align: center;
         }
 
-        @media (max-width: 650px) {
-            .header-nav { gap: 1.2rem; }
-            .header-nav a { font-size: 0.85rem; }
-            .header-brand span { display: none; }
+        .dropdown-item:hover {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-primary);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--md-sys-color-surface-variant);
+            margin: 0.5rem 0;
         }
 
         main {
@@ -243,12 +289,22 @@
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
-            transition: transform 0.2s ease, opacity 0.4s ease;
+            transition: transform 0.2s ease;
         }
 
-        .hidden-project {
+        .project-card:nth-child(n+5) {
             display: none;
-            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .project-card:nth-child(n+4) {
+                display: none;
+            }
+        }
+
+        .projects-grid.show-all .project-card {
+            display: flex !important;
+            animation: fadeIn 0.4s ease forwards;
         }
 
         .banner-container {
@@ -398,21 +454,36 @@
                 <span>stan.</span>
             </a>
             
-            <nav class="header-nav">
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </nav>
+            <div class="menu-container">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
 
-            <button class="theme-toggle-btn" id="themeBtn" aria-label="Toggle Theme">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#about" class="dropdown-item">
+                        <i class="fa-solid fa-user"></i> About Me
+                    </a>
+                    <a href="#projects" class="dropdown-item">
+                        <i class="fa-solid fa-code"></i> Projects
+                    </a>
+                    <a href="#contact" class="dropdown-item">
+                        <i class="fa-regular fa-paper-plane"></i> Contact
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" id="themeBtn">
+                        <i class="fa-solid fa-moon"></i>
+                        <span id="themeText">Dark Mode</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
     <main>
         <section class="profile-section">
-            <img src="a.jpg" alt="Profile Picture" class="profile-pic" onerror="this.src='https://via.placeholder.com/130?text=Stan'">
+            <img src="a.jpg" alt="Profile Picture" class="profile-pic">
             <h1 class="name">@fuckyoustan</h1>
             <p class="bio">Developing shell scripts to optimize & improve Android performance.</p>
         </section>
@@ -431,9 +502,9 @@
 
         <div class="projects-wrapper" id="projects">
             <h2 class="section-title">My Projects</h2>
-            <section class="projects-grid">
+            <section class="projects-grid" id="projectsGrid">
                 
-                <a href="https://github.com/fuckyoustan/PingPimp" target="_blank" class="project-card visible-project">
+                <a href="https://github.com/fuckyoustan/PingPimp" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/PingPimp.jpg" alt="PingPimp Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/PingPimp'">
                     </div>
@@ -443,7 +514,7 @@
                     </div>
                 </a>
                 
-                <a href="https://github.com/fuckyoustan/Licking-Thermal" target="_blank" class="project-card visible-project">
+                <a href="https://github.com/fuckyoustan/Licking-Thermal" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Licking.jpg" alt="Licking Thermal Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Licking-Thermal'">
                     </div>
@@ -453,7 +524,7 @@
                     </div>
                 </a>
 
-                <a href="https://github.com/fuckyoustan/Ultimate-Thermal-Destroyer" target="_blank" class="project-card visible-project">
+                <a href="https://github.com/fuckyoustan/Ultimate-Thermal-Destroyer" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Destroy.jpg" alt="Thermal Destroyer Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Thermal-Destroyer'">
                     </div>
@@ -463,7 +534,7 @@
                     </div>
                 </a>
                 
-                <a href="https://github.com/fuckyoustan/Ultimate-Rendering-Optimization" target="_blank" class="project-card hidden-project">
+                <a href="https://github.com/fuckyoustan/Ultimate-Rendering-Optimization" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Render.jpg" alt="Ultimate Render Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Ultimate-Rendering-Optimization'">
                     </div>
@@ -473,7 +544,7 @@
                     </div>
                 </a>
 
-                <a href="https://github.com/fuckyoustan/Acceleration-N-Utility" target="_blank" class="project-card hidden-project">
+                <a href="https://github.com/fuckyoustan/Acceleration-N-Utility" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/ANU.jpg" alt="ANU Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Acceleration-N-Utility'">
                     </div>
@@ -483,7 +554,7 @@
                     </div>
                 </a>
 
-                <a href="https://github.com/fuckyoustan/Force-DeepSleep" target="_blank" class="project-card hidden-project">
+                <a href="https://github.com/fuckyoustan/Force-DeepSleep" target="_blank" class="project-card">
                     <div class="banner-container">
                         <img src="https://raw.githubusercontent.com/fuckyoustan/Stan-Ganteng/refs/heads/main/els/banner/Dipslip.jpg" alt="DeepSleep Banner" class="project-banner" onerror="this.src='https://opengraph.githubassets.com/1/fuckyoustan/Force-DeepSleep'">
                     </div>
@@ -527,8 +598,31 @@
     </footer>
 
     <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
+
+        function toggleMenu() {
+            hamburgerBtn.classList.toggle('open');
+            dropdownMenu.classList.toggle('active');
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMenu);
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(dropdownMenu.classList.contains('active')) toggleMenu();
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if(!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target) && dropdownMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = themeBtn.querySelector('i');
+        const themeText = document.getElementById('themeText');
         const body = document.body;
 
         themeBtn.addEventListener('click', () => {
@@ -536,37 +630,31 @@
             
             if (body.classList.contains('dark-theme')) {
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeText.textContent = 'Light Mode';
             } else {
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeText.textContent = 'Dark Mode';
             }
         });
 
         const toggleProjectsBtn = document.getElementById('toggleProjectsBtn');
         const btnText = document.getElementById('btnText');
-        const hiddenProjects = document.querySelectorAll('.hidden-project');
+        const projectsGrid = document.getElementById('projectsGrid');
         let isExpanded = false;
 
         toggleProjectsBtn.addEventListener('click', () => {
             isExpanded = !isExpanded;
             
             if (isExpanded) {
-                // Show projects
-                hiddenProjects.forEach(card => {
-                    card.style.display = 'flex';
-                    setTimeout(() => { card.style.opacity = '1'; }, 10);
-                });
+                projectsGrid.classList.add('show-all');
                 btnText.textContent = 'See Less';
                 toggleProjectsBtn.classList.add('expanded');
             } else {
-                // Hide projects
-                hiddenProjects.forEach(card => {
-                    card.style.opacity = '0';
-                    setTimeout(() => { card.style.display = 'none'; }, 300);
-                });
+                projectsGrid.classList.remove('show-all');
                 btnText.textContent = 'See More';
                 toggleProjectsBtn.classList.remove('expanded');
                 
-                // Scroll back to the "Featured Projects" title
+                // Scroll halus kembali ke judul My Projects
                 document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
