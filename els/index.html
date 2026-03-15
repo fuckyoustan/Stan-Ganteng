@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
-    
+    <meta name="monetag" content="e0d6c431d5e572f4d760bf37a576d42e">
     <title>@fuckyoustan</title>
     <meta name="description" content="Portfolio of @fuckyoustan. Developing shell scripts to optimize and improve Android performance.">
     <meta name="author" content="@fuckyoustan">
     
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>(function(s){s.dataset.zone='10709844',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -443,9 +448,75 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- Anti-Adblock Overlay Styles --- */
+        #adblock-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--md-sys-color-background);
+            z-index: 999999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        #adblock-overlay i {
+            font-size: 5rem;
+            color: #e25555;
+            margin-bottom: 1.5rem;
+        }
+
+        #adblock-overlay h2 {
+            font-size: 2.2rem;
+            color: var(--md-sys-color-on-background);
+            margin-bottom: 1rem;
+        }
+
+        #adblock-overlay p {
+            font-size: 1.15rem;
+            color: var(--md-sys-color-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        body.no-scroll {
+            overflow: hidden !important;
+        }
+
+        .adsbox { 
+            display: block; 
+            width: 1px; 
+            height: 1px; 
+            position: absolute; 
+            left: -9999px; 
+        }
     </style>
 </head>
 <body>
+
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+
+    <div id="adblock-overlay">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h2>AdBlocker Terdeteksi!</h2>
+        <p>Sepertinya kamu menggunakan AdBlocker. Website portofolio ini menggunakan monetisasi untuk tetap berjalan. Mohon matikan AdBlocker (atau whitelist website ini) dan muat ulang halaman untuk melihat konten.</p>
+        <button class="pill-btn" onclick="location.reload()">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Muat Ulang Halaman</span>
+        </button>
+    </div>
 
     <header>
         <div class="header-container">
@@ -492,10 +563,10 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <p class="about-text">
-                    I am a passionate developer with a strong focus on optimizing and enhancing system performance. Through continuous exploration and hands-on experience, I have developed a deep understanding of shell scripting and system-level modifications, allowing me to create robust tools that push the boundaries of device efficiency.
+                    I am a passionate developer with a strong focus on optimizing and enhancing system performance. Through continuous exploration and hands on experience, I have developed a deep understanding of shell scripting and system level modifications, allowing me to create robust tools that push the boundaries of device efficiency.
                 </p>
                 <p class="about-text">
-                    My journey in software development is driven by curiosity and a relentless desire to solve complex technical challenges. I thrive on building open-source projects that provide tangible benefits to the community, ranging from network optimization to advanced thermal management, always striving for clean code and elegant solutions.
+                    My journey in software development is driven by curiosity and a relentless desire to solve complex technical challenges. I thrive on building open source projects that provide tangible benefits to the community, ranging from network optimization to advanced thermal management, always striving for clean code and elegant solutions.
                 </p>
             </div>
         </section>
@@ -598,6 +669,7 @@
     </footer>
 
     <script>
+        // --- Hamburger Menu Logic ---
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
@@ -620,10 +692,17 @@
             }
         });
 
+        // --- LocalStorage Theme Logic ---
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = themeBtn.querySelector('i');
         const themeText = document.getElementById('themeText');
         const body = document.body;
+
+        // Update UI tombol tema sesuai dengan status saat halaman dimuat
+        if (body.classList.contains('dark-theme')) {
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            themeText.textContent = 'Light Mode';
+        }
 
         themeBtn.addEventListener('click', () => {
             body.classList.toggle('dark-theme');
@@ -631,12 +710,15 @@
             if (body.classList.contains('dark-theme')) {
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
                 themeText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
             } else {
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
                 themeText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
             }
         });
 
+        // --- Projects Toggle Logic ---
         const toggleProjectsBtn = document.getElementById('toggleProjectsBtn');
         const btnText = document.getElementById('btnText');
         const projectsGrid = document.getElementById('projectsGrid');
@@ -656,6 +738,28 @@
                 document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
+
+        // --- AdBlocker Detection Logic ---
+        function detectAdBlocker() {
+            const ad = document.createElement('div');
+            ad.className = 'adsbox';
+            ad.innerHTML = '&nbsp;';
+            document.body.appendChild(ad);
+
+            setTimeout(() => {
+                const isBlocked = ad.offsetHeight === 0 || window.getComputedStyle(ad).display === 'none';
+                
+                if (isBlocked) {
+                    const overlay = document.getElementById('adblock-overlay');
+                    overlay.style.display = 'flex';
+                    document.body.classList.add('no-scroll');
+                }
+                
+                ad.remove(); 
+            }, 100);
+        }
+
+        window.addEventListener('load', detectAdBlocker);
     </script>
 </body>
 </html>
