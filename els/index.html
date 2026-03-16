@@ -491,7 +491,8 @@
             overflow: hidden !important;
         }
 
-        .adsbox { 
+        /* Hidden element for DOM-based adblock detection */
+        .ad-banner { 
             display: block; 
             width: 1px; 
             height: 1px; 
@@ -510,11 +511,11 @@
 
     <div id="adblock-overlay">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <h2>AdBlocker Terdeteksi!</h2>
-        <p>Sepertinya kamu menggunakan AdBlocker. Website portofolio ini menggunakan monetisasi untuk tetap berjalan. Mohon matikan AdBlocker (atau whitelist website ini) dan muat ulang halaman untuk melihat konten.</p>
+        <h2>Ad Blocker Detected</h2>
+        <p>It appears you are using an ad blocker or a custom DNS that prevents ads from loading. This portfolio relies on ad revenue to remain online. Please disable your ad blocker or whitelist this site, then refresh the page to continue.</p>
         <button class="pill-btn" onclick="location.reload()">
             <i class="fa-solid fa-rotate-right"></i>
-            <span>Muat Ulang Halaman</span>
+            <span>Refresh Page</span>
         </button>
     </div>
 
@@ -698,7 +699,6 @@
         const themeText = document.getElementById('themeText');
         const body = document.body;
 
-        // Update UI tombol tema sesuai dengan status saat halaman dimuat
         if (body.classList.contains('dark-theme')) {
             themeIcon.classList.replace('fa-moon', 'fa-sun');
             themeText.textContent = 'Light Mode';
@@ -739,26 +739,45 @@
             }
         });
 
-        // --- AdBlocker Detection Logic ---
-        function detectAdBlocker() {
+        // --- AdBlocker & DNS Detection Logic ---
+        async function detectAdBlocker() {
+            let isBlocked = false;
+
+            // Method 1: DOM Check (Catches browser extensions like uBlock Origin, AdBlock Plus)
             const ad = document.createElement('div');
-            ad.className = 'adsbox';
-            ad.innerHTML = '&nbsp;';
+            ad.className = 'ad-banner';
             document.body.appendChild(ad);
 
-            setTimeout(() => {
-                const isBlocked = ad.offsetHeight === 0 || window.getComputedStyle(ad).display === 'none';
-                
-                if (isBlocked) {
-                    const overlay = document.getElementById('adblock-overlay');
-                    overlay.style.display = 'flex';
-                    document.body.classList.add('no-scroll');
+            const domBlocked = ad.offsetHeight === 0 || window.getComputedStyle(ad).display === 'none';
+            ad.remove();
+
+            if (domBlocked) {
+                isBlocked = true;
+            } else {
+                // Method 2: Network Request (Catches DNS blockers like AdGuard DNS, Pi-hole)
+                try {
+                    // Try fetching a common tracking/ad URL. 
+                    // 'no-cors' prevents browser CORS errors; we just want to know if it resolves or gets aborted.
+                    await fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                        method: 'HEAD',
+                        mode: 'no-cors',
+                        cache: 'no-store'
+                    });
+                } catch (error) {
+                    // If the fetch fails entirely, it's highly likely blocked at the network/DNS level
+                    isBlocked = true;
                 }
-                
-                ad.remove(); 
-            }, 100);
+            }
+
+            // Show the overlay if either method detects blocking
+            if (isBlocked) {
+                const overlay = document.getElementById('adblock-overlay');
+                overlay.style.display = 'flex';
+                document.body.classList.add('no-scroll');
+            }
         }
 
+        // Run the detection once the window has fully loaded
         window.addEventListener('load', detectAdBlocker);
     </script>
 </body>
