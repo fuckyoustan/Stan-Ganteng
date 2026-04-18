@@ -20,17 +20,17 @@ export default {
     			sm: 'calc(var(--radius) - 4px)'
     		},
 			colors: {
-				// Light mode colors
-				'light-theme': '#E9EBEC',
-				'primary-light': '#FBD144',
-				'primary-hover-light': '#FFE071',
+				// Light mode colors (Pink-focused)
+				'light-theme': '#FDF8F9', // Background yang lebih lembut senada pink
+				'primary-light': '#F06292', // Warna pink dari logo.svg
+				'primary-hover-light': '#F48FB1', // Pink yang lebih terang untuk hover
 
-				// Dark mode colors
-				'dark-theme': '#0C151D',
-				'primary-dark': '#FFE071',
-				'primary-hover-dark': '#FBD144',
+				// Dark mode colors (Pink-focused)
+				'dark-theme': '#0C151D', // Background gelap dengan tint pink/maroon MD3
+				'primary-dark': '#F48FB1', // Pink terang untuk aksesibilitas di mode gelap
+				'primary-hover-dark': '#F06292', // Pink logo untuk hover di mode gelap
 
-				// Neutrals
+				// Neutrals (Tetap pertahankan atau sesuaikan sedikit ke arah cold-grey)
 				'n200': '#d7d9da',
 				'n900': '#222222',
 				'n700': '#171F26',

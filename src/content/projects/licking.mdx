@@ -1,0 +1,68 @@
+---
+title: Licking Thermal
+summary: A specialized Magisk module that intelligently manages thermal throttling. It disables performance limits during gaming sessions and restores them automatically once finished.
+tags:
+    - Magisk
+    - KernelSU
+    - Thermal Management
+    - Gaming Performance
+startDate: 2024-06-15
+endDate: 2026-04-19
+author: fuckyoustan
+url: https://github.com/fuckyoustan/Licking-Thermal
+cover: './images/projects/licking.png'
+ogImage: ''
+---
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+3. [How It Works](#how-it-works)
+4. [Usage Instructions](#usage-instructions)
+5. [Safety Warning](#safety-warning)
+6. [Final Thoughts](#final-thoughts)
+
+---
+
+## Overview
+**Licking Thermal** is a performance-oriented Magisk module designed to eliminate aggressive thermal throttling on Android devices. It is built for gamers who want to squeeze every bit of power out of their hardware to maintain smooth frame rates without sudden performance drops caused by system-level thermal engine limits.
+
+The module operates on a "dynamic toggle" system, ensuring that your device only runs at maximum capacity when you are actually gaming.
+
+---
+
+## Key Features
+- **🚀 Auto Thermal Killer:** Automatically detects when a game is launched to disable throttling and restores it immediately upon exit.
+- **🧠 Power Limit Bypass:** Bypasses GPU and CPU power limiters, allowing the hardware to maintain peak frequencies even under high-load scenarios.
+- **🛠 Userspace Thermal Zone:** Forces thermal zones into userspace mode, preventing the system from making autonomous decisions to slow down your device.
+- **🔒 HAL Locker:** Temporarily locks the Thermal Hardware Abstraction Layer (HAL) to prevent it from interfering with your performance profiles.
+- **🔔 Live Status Notifications:** Provides real-time notifications whenever thermal management is disabled or restored.
+
+---
+
+## How It Works
+Licking Thermal uses a background daemon to monitor the foreground application. When a package name matches your custom list, it executes a series of shell commands to modify system properties and thermal engine parameters. 
+
+It specifically targets `/sys/class/thermal/` and the Android Thermal HAL to ensure a comprehensive bypass of performance limiters.
+
+---
+
+## Usage Instructions
+1. **Installation:** Flash the module via Magisk or KernelSU manager.
+2. **Configuration:** If your game is not detected automatically, edit the `list.txt` file located in the module's directory.
+3. **Activation:** The module starts automatically on boot; no further manual activation is required.
+
+---
+
+## Warning
+> [!CAUTION]
+> **USE AT YOUR OWN RISK.** This module disables critical safety features designed to protect your hardware from heat damage. It is highly recommended to use an external cooling solution (like a phone cooler fan) while using this module for extended gaming sessions.
+
+---
+
+## Final Thoughts
+1. **Dynamic Efficiency:** Unlike "static" thermal disablers, Licking Thermal only acts when needed, preserving your battery and hardware health during normal daily use.
+2. **Community Driven:** Constant updates based on user feedback to support new chipsets and Android versions.
+3. **Open Transparency:** Fully open-source logic to ensure safety and allow for community contributions.
+
+---

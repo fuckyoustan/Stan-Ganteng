@@ -1,78 +1,78 @@
 export const SITE = {
-    website: "https://simple-portfolio.vicbox.dev", // replace this with your deployed domain
-    title: "Simple Portfolio",
-    description: "A simple but beautiful portfolio created with Astro",
-    tags: ["portfolio", "Resume cv", "Astro"],
+    website: "https://fuckyoustan.vercel.app", 
+    title: "Stan Ganteng",
+    description: "Android system optimization, performance tweaks, and Magisk modules showcase.",
+    tags: ["Magisk", "KernelSU", "Android Tuning", "Astro"],
     ogImage: "/og-image.webp",
     logo: "logo",
-    logoText: "Portfolio",
-    lang: "en",
+    logoText: "Stan.",
+    lang: "id",
     favicon: "/favicon.png",
-    repository: "https://github.com/vito8916/simple-portfolio.git",
-    author: "Victor Alvarado",
-    profile: "https://victoralvarado.dev/",
+    repository: "https://github.com/fuckyoustan/Stan-Ganteng",
+    author: "Stan",
+    profile: "https://fuckyoustan.vercel.app/",
 }
 
 export const ME = {
-    name: "VicBox Dot Dev",
-    profession: "Software Engineer | Full Stack Developer",
-    profileImage: "pp2.png",
+    name: "@fuckyoustan",
+    profession: "Android Enthusiast & Module Developer",
+    profileImage: "pp2.png", // Pastikan foto kamu ada di folder public dengan nama ini
     profileFacts: [
         {
-            value: 10,
-            description: "Years of Experience"
+            value: 2,
+            description: "Years of Modding"
         },
         {
-            value: 5,
-            description: "Completed Projects"
+            value: 6,
+            description: "Projects Released"
         },
         {
-            value: 4,
-            description: "Satisfied Clients"
+            value: 2683,
+            description: "Happy Users"
         }
     ],
     contactInfo: {
-        email: "vicbox.dev@vicbox.dev",
-        linkedin: "https://www.linkedin.com/in/victor-alvaradohn",
+        email: "fckyoustan666@gmail.com",
+        linkedin: "", 
         resumeDoc: "resume.pdf",
     },
-    aboutMe: "I am a software engineer with a passion for web development. I have experience in building web " + "applications using modern technologies. I am a self-taught developer who enjoys learning new things and " + "sharing knowledge with others.",
+    aboutMe: "I am a self taught developer and university student from Indonesia with a deep interest in Android system level modifications. I focus on building Magisk and KernelSU modules.",
 }
 
 export const SOCIALS = [
     {
         name: "Twitter",
-        url: "https://twitter.com/vicbox.dev",
+        url: "https://x.com/mpiiess",
         icon: "twitter-x-fill",
         show: true
     },
     {
         name: "Facebook",
-        url: "https://www.facebook.com/vicbox.dev",
+        url: "https://www.facebook.com/",
         icon: "facebook-fill",
         show: false
     },
     {
         name: "Instagram",
-        url: "https://www.instagram.com/vicbox.dev",
+        url: "https://www.instagram.com/napiies_",
         icon: "instagram-fill",
         show: true
     },
     {
-        name: "Youtube",
-        url: "https://www.youtube.com/vicbox.dev",
-        icon: "youtube-fill",
+        name: "Telegram",
+        url: "https://t.me/EverythingAboutArchive",
+        icon: "telegram-fill",
         show: true
     },
     {
         name: "TikTok",
-        url: "https://tiktok.com/vicbox.dev",
+        url: "https://tiktok.com/",
         icon: "tik-fill",
         show: false
     },
     {
         name: "GitHub",
-        url: "https://github.com/vicbox.dev",
+        url: "https://github.com/fuckyoustan",
         icon: "github-fill",
         show: true
     }
