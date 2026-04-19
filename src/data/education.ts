@@ -11,7 +11,7 @@ interface Education {
 const education: Education[] = [
     {
         title: "Islamic Religious Education",
-        startDate: "2022-09-01", 
+        startDate: "2021-09-01", 
         school: "Nahdlatul Ulama Islamic University",
         location: "Jepara, Indonesia",
         description: "Focusing on religious studies and education while actively pursuing self taught software development and system level Android optimization.",
