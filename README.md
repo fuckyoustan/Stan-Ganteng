@@ -12,7 +12,7 @@ This project leverages **Astro v5**, incorporating the latest features that Astr
 
 ## 🔥 DEMO
 
-- [VIEW DEMO](https://simple-portfolio.vicbox.dev)
+- [VIEW DEMO](https://fuckyoustan.vercel.app/)
 
 ### Features
 **Now upgraded to Astro v5**: the latest release of Astro.
